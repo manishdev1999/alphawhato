@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect, session, url_for
-import pywhatkit as kit
+# import pywhatkit as kit
 from urllib.parse import quote
 from selenium import webdriver
 from time import sleep
@@ -33,7 +33,7 @@ firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 db = firebase.database()
 
-@app.route('/', methods=['POST'])
+@app.route('/')
 def home():
     
     return render_template('login.html')
@@ -242,38 +242,38 @@ def insights():
     return render_template('graphs.html')
 
 
-@app.route('/message/<id>')
-def image(id):
-    onUser = session['user']
-    onUser = str(onUser)
-    userData = db.child("users").child(onUser).child("campaign").child(id).get()
-    userData = userData.val()
-    message = userData['message']
-    message = str(message)
-    path = userData['location']
-    path = str(path)
-    numbers = []
-    f = open('C:/Users/ManishDev/Desktop/numbers.txt', encoding='UTF8')
+# @app.route('/message/<id>')
+# def image(id):
+#     onUser = session['user']
+#     onUser = str(onUser)
+#     userData = db.child("users").child(onUser).child("campaign").child(id).get()
+#     userData = userData.val()
+#     message = userData['message']
+#     message = str(message)
+#     path = userData['location']
+#     path = str(path)
+#     numbers = []
+#     f = open('C:/Users/ManishDev/Desktop/numbers.txt', encoding='UTF8')
 
 
-    f = open("C:/Users/ManishDev/Desktop/numbers.txt", "r")
-    for line in f.read().splitlines():
-        if line != "":
-            numbers.append(line)
-    f.close()
-    total_number=len(numbers)
-    count = 1;
-    for idx, number in enumerate(numbers):
-        number = number.strip()
-        if number == "":
-                continue
-        try:
-                kit.sendwhats_image(phone_no = number, img_path = path, caption = message, tab_close = True)
+#     f = open("C:/Users/ManishDev/Desktop/numbers.txt", "r")
+#     for line in f.read().splitlines():
+#         if line != "":
+#             numbers.append(line)
+#     f.close()
+#     total_number=len(numbers)
+#     count = 1;
+#     for idx, number in enumerate(numbers):
+#         number = number.strip()
+#         if number == "":
+#                 continue
+#         try:
+#                 kit.sendwhats_image(phone_no = number, img_path = path, caption = message, tab_close = True)
 
-        except Exception as e:
-                print('Failed to send message to ' + number + str(e))
+#         except Exception as e:
+#                 print('Failed to send message to ' + number + str(e))
 
-    return "messages sent"
+#     return "messages sent"
 
 @app.route('/documents')
 def documents():
