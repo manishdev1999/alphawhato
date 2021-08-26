@@ -33,6 +33,11 @@ firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 db = firebase.database()
 
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    
+    return render_template('login.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if (request.method == 'POST'):
