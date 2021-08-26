@@ -33,7 +33,7 @@ firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 db = firebase.database()
 
-@app.route('/')
+@app.route('/', methods=['POST'])
 def home():
     
     return render_template('login.html')
